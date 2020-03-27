@@ -1,68 +1,78 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+Steps to Deploy React App to Github Pages
+-----------------------------------------
 
-In the project directory, you can run:
+1. Create a new React app using below command:
 
-### `yarn start`
+projects > npx create-react-app test-react-deploy
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Above command installs 'create-react-app' npm package and then creates a new React app named 'test-react-deploy' using it.
+(This is the recommended way instead of installing create-react-app globally and then creating a project using it)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+2. Once app is created navigate to the app folder and customize the code.
 
-### `yarn test`
+projects > cd test-react-deploy
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Note: App created using create-react-app usually has git configured(if git is available on the local system).
 
-### `yarn build`
+3. Test/Run the app locally after making changes.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+test-react-deploy > npm start
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+4. Create a new repository in Github:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<github_username>/<new_repo_name>
 
-### `yarn eject`
+IMP: Make sure NO file is created by default inside the new repo(Not even README.md file)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+5. Commit changes in local code base:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+test-react-deploy > git add .
+test-react-deploy > git commit -m "First commit"
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+6. Add remote repository to push the local React app code to.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+test-react-deploy > git remote add origin <git_new_repo_url>
+test-react-deploy > git remote -v  (lists all the remotes where the code is pushed to/fetched from for the current project folder)
 
-## Learn More
+test-react-deploy > git push origin master (pushes local React app code from 'master' branch to the remote repository's 'origin'  branch.)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+7. Install gh-pages npm package.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+test-react-deploy > npm install --save gh-pages
 
-### Code Splitting
+8. Update package.json file so that it has the 'homepage', 'predeploy', 'deploy' properties configured.
+```
+{
+  "name": "test-react-deploy",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://vsquared101.github.io/react-on-github/",
+  "dependencies": {
+    ...
+  },
+  "scripts": {
+    ...
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    ...
+  },
+  "browserslist": {
+    ...
+  }
+}
+```
+"homepage": The path where we want to host the application(value: "http://{username}.github.io/{repo-name}")  (MAKE SURE THE FORMAT FOR homepage is EXACTLY AS GIVEN HERE)
+"predeploy": This command helps bundle the React App.(creates the 'build' folder that is to be deployed on github pages)
+"deploy": publishes the bundle created to github('build' folder is deployed to github pages)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+9. Optionally we can commit current code to git using > git add . and > git commit -m "Second commit"
 
-### Analyzing the Bundle Size
+10. Navigate to the URL configured in the "homepage" property. If everything went well before this step the application homepage should be displayed.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+IMP: We may face issues with navigation if we use BrowserRouter from the react-router-dom module. Possible solutions involve using HashRouter instead of BrowserRouter.
 
-### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
