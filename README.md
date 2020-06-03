@@ -68,6 +68,7 @@ test-react-deploy > npm install --save gh-pages
 "homepage": The path where we want to host the application(value: "http://{username}.github.io/{repo-name}")  (MAKE SURE THE FORMAT FOR homepage is EXACTLY AS GIVEN HERE)
 "predeploy": This command helps bundle the React App.(creates the 'build' folder that is to be deployed on github pages)
 "deploy": publishes the bundle created to github('build' folder is deployed to github pages)
+IMP: Make sure there is no slash before the Favicon icon import in the index.html. This may cause the deployment to fail.
 
 9. Optionally we can commit current code to git using > git add . and > git commit -m "Second commit"
 
